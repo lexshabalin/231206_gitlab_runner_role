@@ -1,17 +1,6 @@
 ---
 # tasks file for gitlab_runner
 
-#- name: Copy gitlab-runner install script
-#  template:
-#    src: "{{ role_path }}/files/installrunner.sh"
-#    dest: "/tmp/"
-#    mode: '0777'
-#  become: true
-
-#- name: Install gitlab-runner
-#  shell: /tmp/installrunner.sh
-#  become: true
-
 - name: Copy registration gitlab-runner script
   template:
     src: "{{ role_path }}/files/regrunner.sh"
@@ -26,6 +15,20 @@
 - name: Gitlab runner add-priveleg-true
   shell: sudo sed -i "30s~.*~    privileged = true~" /etc/gitlab-runner/config.toml
 
+- name: Add rh to group 'docker'                       
+  user:
+    name: rh          
+    groups: docker
+    append: yes
+  become: true
+          
+- name: Add gitlab-runner to group 'docker'
+  user:
+    name: gitlab-runner
+    groups: docker
+    append: yes
+  become: true
+
 - name: Change ownership of /etc/systemd/system
   ansible.builtin.file:
     path: /etc/systemd/system
@@ -34,4 +37,3 @@
     owner: gitlab-runner
     group: gitlab-runner
   become: true
-
