@@ -1,0 +1,24 @@
+---
+# tasks file for gitlab_runner
+
+- name: Copy gitlab-runner install script
+  template:
+    src: "{{ role_path }}/files/installrunner.sh"
+    dest: "/tmp/"
+    mode: '0664'
+  become: true
+
+- name: Install gitlab-runner
+  shell: /tmp/installrunner.sh
+  become: true
+
+- name: Copy registration gitlab-runner script
+  template:
+    src: "{{ role_path }}/files/regrunner.sh"
+    dest: "/tmp/"
+    mode: '0664'
+  become: true
+
+- name: Register gitlab-runner
+  shell: /tmp/regrunner.sh
+  become: true
