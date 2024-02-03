@@ -5,7 +5,7 @@
   template:
     src: "{{ role_path }}/files/installrunner.sh"
     dest: "/tmp/"
-    mode: '0664'
+    mode: '0777'
   become: true
 
 - name: Install gitlab-runner
@@ -16,7 +16,7 @@
   template:
     src: "{{ role_path }}/files/regrunner.sh"
     dest: "/tmp/"
-    mode: '0664'
+    mode: '0777'
   become: true
 
 - name: Register gitlab-runner
