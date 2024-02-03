@@ -8,5 +8,5 @@ sudo gitlab-runner register --non-interactive \
   --registration-token $CI_REGISTRATION_TOKEN \
   --description "web01_Runner" \
   --tag-list "web" \
-  --run-untagged="false" \
+  --run-untagged="true" \
   --locked="false"
