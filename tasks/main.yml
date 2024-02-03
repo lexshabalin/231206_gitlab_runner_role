@@ -19,6 +19,9 @@
     mode: '0777'
   become: true
 
+- name: add-priveleg-true
+  shell: sudo sed -i "30s~.*~    privileged = true~" /etc/gitlab-runner/config.toml
+
 - name: Register gitlab-runner
   shell: /tmp/regrunner.sh
   become: true
