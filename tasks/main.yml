@@ -1,6 +1,5 @@
 ---
 # tasks file for gitlab_runner
-
 - name: Copy registration gitlab-runner script
   template:
     src: "{{ role_path }}/files/regrunner.sh"
@@ -15,13 +14,16 @@
 - name: Gitlab runner add-priveleg-true
   shell: sudo sed -i "30s~.*~    privileged = true~" /etc/gitlab-runner/config.toml
 
-- name: Add rh to group 'docker'                       
+- name: Add passless glrunner
+  shell: echo "gitlab-runner ALL=(ALL) NOPASSWD:ALL" | sudo tee -a /etc/sudoers
+
+- name: Add rh to group 'docker'
   user:
-    name: rh          
+    name: rh
     groups: docker
     append: yes
   become: true
-          
+
 - name: Add gitlab-runner to group 'docker'
   user:
     name: gitlab-runner
